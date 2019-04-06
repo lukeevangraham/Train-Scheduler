@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" media="screen" href="./assets/css/style.css">
-    <script src="./assets/javascript/main.js"></script>
 </head>
 <body>
     
@@ -30,27 +29,28 @@
                         <table class="table">
                                 <thead>
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">First</th>
-                                    <th scope="col">Last</th>
-                                    <th scope="col">Handle</th>
+                                    <th scope="col">Train Name</th>
+                                    <th scope="col">Destination</th>
+                                    <th scope="col">Frequency (min)</th>
+                                    <th scope="col">Next Arrival</th>
+                                    <th scope="col">Minutes Away</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <th scope="row">1</th>
+                                    <!-- <th scope="row">1</th> -->
                                     <td>Mark</td>
                                     <td>Otto</td>
                                     <td>@mdo</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">2</th>
+                                    <!-- <th scope="row">2</th> -->
                                     <td>Jacob</td>
                                     <td>Thornton</td>
                                     <td>@fat</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">3</th>
+                                    <!-- <th scope="row">3</th> -->
                                     <td>Larry</td>
                                     <td>the Bird</td>
                                     <td>@twitter</td>
@@ -84,6 +84,7 @@
                                 <label for="exampleFormControlInput1">Frequency (min)</label>
                                 <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="60">
                             </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                             </form>
 
 
@@ -103,5 +104,8 @@
 
     <!-- FIREBASE CDN -->
     <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase.js"></script>
+
+    <!-- MAIN SCRIPT -->
+    <script src="./assets/javascript/main.js"></script>
 </body>
 </html>
