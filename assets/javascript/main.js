@@ -73,15 +73,23 @@ database.ref().on("child_added", function(childSnapshot){
     console.log(trainInitTime);
     console.log(trainFreq);
 
+    // Calculate the Next Arrival
+    var nextArr = moment().diff(moment(trainInitTime, 'minutes'));
+    console.log((moment()) + " is moment");
+    console.log(nextArr + " is nextArr");
+
+
+
     // Prettify the First Train TIme
-    // var trnInitialPretty = moment.unix(trainInitTime).format("");
+    // var trnInitialPretty = moment.unix(trainInitTime).format("hA");
+    // console.log(trnInitialPretty);
 
     // Create the new row
     var newRow = $("<tr>").append(
         $("<td>").text(trainName),
         $("<td>").text(trainDest),
-        $("<td>").text(trainInitTime),
-        $("<td>").text(trainFreq )
+        $("<td>").text(trainFreq),
+        $("<td>").text(trainInitTime)
     );
 
     // Apprend the new row to the table
