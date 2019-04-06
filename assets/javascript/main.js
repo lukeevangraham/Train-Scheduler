@@ -74,9 +74,11 @@ database.ref().on("child_added", function(childSnapshot){
     console.log(trainFreq);
 
     // Calculate the Next Arrival
-    var nextArr = moment().diff(moment(trainInitTime, 'minutes'));
-    console.log((moment()) + " is moment");
-    console.log(nextArr + " is nextArr");
+    var a = moment(trainInitTime, "H:m");
+    var b = moment().format("H:m");
+    var nextArr = moment(moment(b, "H:m").diff(moment(a, "H:m"))).format("mm") % trainFreq;
+    var calc = trainFreq - nextArr
+    console.log(calc + " is next arr");
 
 
 
@@ -89,6 +91,7 @@ database.ref().on("child_added", function(childSnapshot){
         $("<td>").text(trainName),
         $("<td>").text(trainDest),
         $("<td>").text(trainFreq),
+        $("<td>").text(calc),
         $("<td>").text(trainInitTime)
     );
 
