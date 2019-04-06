@@ -73,28 +73,32 @@ database.ref().on("child_added", function(childSnapshot){
     console.log(trainInitTime);
     console.log(trainFreq);
 
+    var a = moment(trainInitTime, "hh:mma");
+    var b = moment().format("hh:mma");
+
+    // if train hasn't started
+    console.log(moment(a))
+    console.log(moment(b))
+    console.log(moment(b).isBefore(moment(a, 'minute')))
+    console.log("look here", moment('07:07am', "hh:mma").isBefore(moment('09:00am', "hh:mma")))
+
+    if (moment(b, "hh:mma").isBefore(moment(a, "hh:mma"))) {
+        console.log(trainName, "train hasn't left yet")
+        nextArr = trainInitTime;
+    } 
+
     // Calculate the Minutes Away
-    var a = moment(trainInitTime, "H:m");
-    var b = moment().format("H:m");
-    var calc = moment(moment(b, "H:m").diff(moment(a, "H:m"))).format("mm");
-    // var calcNoMod = moment(moment(b, "H:m").diff(moment(a, "H:m"))).format("mm");
+    a = moment(trainInitTime, "H:m");
+    b = moment().format("H:m");
+    var calc = moment(moment(b, "H:m").diff(moment(a, "H:m"))).format("mm") % trainFreq;
     var minAway = trainFreq - calc
 
     console.log(calc + " is calc")
-    // console.log(calc + " is calcNoMod")
 
     // Calculate the next arrival
-    // var nextArr = moment(b).add(calc, 'minutes')
     var duration = moment.duration({'minutes' : minAway})
     var nextArrNoFormat = moment().add(duration);
     var nextArr = moment(nextArrNoFormat).format("H:mm A");
-    console.log(moment(nextArr).format("H:mm") + " is nextArr");
-
-    // for (a; a.isBefore(b, "H:m"); a.add(trainFreq, 'minutes')) {
-    //     // const element = array[index];
-    //     console.log("one iteration")
-        
-    // }
 
     // Create the new row
     var newRow = $("<tr>").append(
