@@ -83,10 +83,18 @@ database.ref().on("child_added", function(childSnapshot){
     console.log(calc + " is calc")
     // console.log(calc + " is calcNoMod")
 
-
-
     // Calculate the next arrival
-    var nextArr = ""
+    // var nextArr = moment(b).add(calc, 'minutes')
+    var duration = moment.duration({'minutes' : minAway})
+    var nextArrNoFormat = moment().add(duration);
+    var nextArr = moment(nextArrNoFormat).format("H:mm A");
+    console.log(moment(nextArr).format("H:mm") + " is nextArr");
+
+    // for (a; a.isBefore(b, "H:m"); a.add(trainFreq, 'minutes')) {
+    //     // const element = array[index];
+    //     console.log("one iteration")
+        
+    // }
 
     // Create the new row
     var newRow = $("<tr>").append(
