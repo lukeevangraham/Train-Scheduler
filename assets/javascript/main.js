@@ -23,7 +23,6 @@ $("#add-train").on("click", function(event) {
     // Don't refresh the page!
     event.preventDefault();
 
-    console.log("clicked");
 
     // Storing and retrieving the most recent user.
     // Don't forget to provide initial data to your Firebase database.
@@ -32,10 +31,59 @@ $("#add-train").on("click", function(event) {
     initialTime = $("#initial-time-input").val().trim();
     frequency = $("#frequency-input").val().trim();
 
-    database.ref().set({
+    // Creates local "temporary" object for holding train data
+    var newTrain = {
         name: name,
         destination: destination,
         initialTime: initialTime,
         frequency: frequency
-    })
+    };
+
+    // Upload train data to the database
+    database.ref().push(newTrain);
+
+    // Logs everything to console
+    console.log(newTrain.name);
+    console.log(newTrain.destination);
+    console.log(newTrain.initialTime);
+    console.log(newTrain.frequency);
+
+    alert("Train successfully added");
+
+      // Clears all of the text-boxes
+  $("#name-input").val("");
+  $("#destination-input").val("");
+  $("#initial-time-input").val("");
+  $("#frequency-input").val("");
 });
+
+// Firebase event for adding train to the database and a row in the html when the user adds an entry
+database.ref().on("child_added", function(childSnapshot){
+    console.log(childSnapshot.val());
+
+    // store everything into a variable
+    let trainName = childSnapshot.val().name;
+    let trainDest = childSnapshot.val().destination;
+    let trainInitTime = childSnapshot.val().initialTime;
+    let trainFreq = childSnapshot.val().frequency;
+
+    // Train Info
+    console.log(trainName);
+    console.log(trainDest);
+    console.log(trainInitTime);
+    console.log(trainFreq);
+
+    // Prettify the First Train TIme
+    // var trnInitialPretty = moment.unix(trainInitTime).format("");
+
+    // Create the new row
+    var newRow = $("<tr>").append(
+        $("<td>").text(trainName),
+        $("<td>").text(trainDest),
+        $("<td>").text(trainInitTime),
+        $("<td>").text(trainFreq )
+    );
+
+    // Apprend the new row to the table
+    $("#train-table > tbody").append(newRow);
+})
