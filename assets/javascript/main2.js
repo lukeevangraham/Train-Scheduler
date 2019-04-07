@@ -63,15 +63,35 @@ database.ref().on("child_added", function (childSnapshot) {
 
     // Train Info
 
+    var timeFormat = "H:mm A"
+    var convertedTime = moment(trainInitTime, timeFormat);
+    // console.log("converted time w format", convertedTime.format("H:mm A"))
+    // console.log(convertedTime);
+
+    // var trainInitTimePretty = moment.unix(trainInitTime).format("H:mm");
+
+    // Calculate time from initial start to now
+    var trainAway = moment().diff(moment(trainInitTime, "X"), "minutes")
+    console.log("trainAway is", trainAway);
+
+
     var a = moment(trainInitTime, "H:mm");
     var b = moment().format("H:mm");
 
-    var timeFormat = "H:mm"
-    var convertedTime = moment(trainInitTime, timeFormat);
+    // Calculate minutes away
+    // var differece = 
+
 
     // if train hasn't started
     if (moment(b, "hh:mma").isBefore(moment(a, "hh:mma"))) {
-        nextArr = convertedTime.format("hh:mm A");
+        // nextArr = convertedTime.format("hh:mm A");
+        // console.log(convertedTime.format("hh:mm A"))
+
+        console.log("THEORY", convertedTime.diff(moment(), "minutes"));
+        var diff = convertedTime.diff(moment(), "minutes");
+        console.log(diff);
+        console.log("PART 2", moment(convertedTime).add(diff, 'minutes'))
+
 
         var minAway = convertedTime.diff(moment(), "minutes") + 1;
 
@@ -86,6 +106,7 @@ database.ref().on("child_added", function (childSnapshot) {
         var duration = moment.duration({ 'minutes': minAway })
         var nextArrNoFormat = moment().add(duration);
         var nextArr = moment(nextArrNoFormat).format("h:mm A");
+        console.log("look here friend", moment().diff(convertedTime, "minutes"));
         // var nextArr = moment().diff(convertedTime, "minutes");
     }
 
