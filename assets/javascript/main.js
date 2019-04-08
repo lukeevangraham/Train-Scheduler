@@ -57,8 +57,6 @@ database.ref().on("child_added", function (childSnapshot) {
 
     var prefferedFormat = "HH:mm"
     var convertedTime = (moment(initialTime, prefferedFormat));
-    console.log(initialTime)
-    console.log(convertedTime)
 
     // if train started running
     if (moment(convertedTime).isBefore(moment())) {
