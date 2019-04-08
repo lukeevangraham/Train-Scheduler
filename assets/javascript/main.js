@@ -61,6 +61,12 @@ database.ref().on("child_added", function (childSnapshot) {
     let trainInitTime = childSnapshot.val().initialTime;
     let trainFreq = childSnapshot.val().frequency;
 
+    dayAdder = 0
+
+    // if (trainFreq >= 1440) {
+
+    // }
+
     // Train Info
 
     var a = moment(trainInitTime, "H:mm");
