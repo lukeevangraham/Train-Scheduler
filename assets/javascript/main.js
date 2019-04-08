@@ -12,12 +12,6 @@ firebase.initializeApp(config);
 // Create a variable to reference the database
 var database = firebase.database();
 
-// Initial Values
-var name = "";
-var destination = "";
-var initialTime = 0;
-var frequency = "";
-
 // Capture Button Click
 $("#add-train").on("click", function (event) {
     // Don't refresh the page!
@@ -26,10 +20,10 @@ $("#add-train").on("click", function (event) {
 
     // Storing and retrieving the most recent user.
     // Don't forget to provide initial data to your Firebase database.
-    name = $("#name-input").val().trim();
-    destination = $("#destination-input").val().trim();
-    initialTime = $("#initial-time-input").val().trim();
-    frequency = $("#frequency-input").val().trim();
+    let name = $("#name-input").val().trim();
+    let destination = $("#destination-input").val().trim();
+    let initialTime = $("#initial-time-input").val().trim();
+    let frequency = $("#frequency-input").val().trim();
 
     // Creates local "temporary" object for holding train data
     var newTrain = {
@@ -56,50 +50,37 @@ database.ref().on("child_added", function (childSnapshot) {
     console.log(childSnapshot.val());
 
     // store everything into a variables
-    let trainName = childSnapshot.val().name;
-    let trainDest = childSnapshot.val().destination;
-    let trainInitTime = childSnapshot.val().initialTime;
-    let trainFreq = childSnapshot.val().frequency;
+    let name = childSnapshot.val().name;
+    let destination = childSnapshot.val().destination;
+    let initialTime = childSnapshot.val().initialTime;
+    let frequency = childSnapshot.val().frequency;
 
-    dayAdder = 0
+    var prefferedFormat = "HH:mm"
+    var convertedTime = (moment(initialTime, prefferedFormat));
+    console.log(initialTime)
+    console.log(convertedTime)
 
-    // if (trainFreq >= 1440) {
+    // if train started running
+    if (moment(convertedTime).isBefore(moment())) {
 
-    // }
-
-    // Train Info
-
-    var a = moment(trainInitTime, "H:mm");
-    var b = moment().format("H:mm");
-
-    var timeFormat = "H:mm"
-    var convertedTime = moment(trainInitTime, timeFormat);
+        // Calculate minutes away
+        var calc = moment().diff(convertedTime, "minutes") % frequency;
+        var minAway = frequency - calc;
 
     // if train hasn't started
-    if (moment(b, "hh:mma").isBefore(moment(a, "hh:mma"))) {
-        nextArr = convertedTime.format("hh:mm A");
-
-        var minAway = convertedTime.diff(moment(), "minutes") + 1;
-
     } else {
-        // Calculate the Minutes Away
-        a = moment(trainInitTime, "H:m");
-        b = moment().format("H:m");
-        var calc = moment(moment(b, "H:m").diff(moment(a, "H:m"))).format("mm") % trainFreq;
-        var minAway = trainFreq - calc
-
-        // Calculate the next arrival
-        var duration = moment.duration({ 'minutes': minAway })
-        var nextArrNoFormat = moment().add(duration);
-        var nextArr = moment(nextArrNoFormat).format("h:mm A");
-        // var nextArr = moment().diff(convertedTime, "minutes");
+        // Calculate minutes away
+        var minAway = convertedTime.diff(moment(), "minutes") + 1;
     }
+    
+    // Calculate next arrival
+    var nextArr = moment().add(minAway, "minutes").format("hh:mm A");
 
     // Create the new row
     var newRow = $("<tr>").append(
-        $("<td>").text(trainName),
-        $("<td>").text(trainDest),
-        $("<td>").text(trainFreq),
+        $("<td>").text(name),
+        $("<td>").text(destination),
+        $("<td>").text(frequency),
         $("<td>").text(nextArr),
         $("<td>").text(minAway),
     );
