@@ -13,3 +13,12 @@ body {
   #table {
     background: rgba(255, 255, 255, .9)
 }
+
+#jumbotron {
+    background: rgba(255, 255, 255, .5)
+}
+
+.display-4 {
+    font-family: 'Quicksand', sans-serif;
+
+}
