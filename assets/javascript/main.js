@@ -17,9 +17,9 @@ let currentData = []
 function adjustNextArrAndMinAway(params) {
 $(`tr.item`).each(function() {
     // console.log("MinAway: ", $(this).find(`td.minAway`).html());
-    let nextArr = moment($(this).find(`td.nextArr`).html())
+    let nextArr = moment($(this).find(`td.nextArr`).html(), ["h:mm A"])
 
-    console.log("NEXT: ", moment(nextArr))
+    console.log("NEXT: ", moment(nextArr).format("HH:mm"))
 
     if (moment(nextArr).isAfter(moment())) {
         
@@ -41,8 +41,6 @@ function prepFillTable() {
 
 // Function gets data from database and fills rows
 function fillTable(childSnapshot) {
-  //   console.log("FILLING TABLE");
-    // console.log(childSnapshot)
 
   // store everything into a variables
   let name = childSnapshot.val().name;
