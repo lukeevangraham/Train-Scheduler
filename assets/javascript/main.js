@@ -12,17 +12,37 @@ firebase.initializeApp(config);
 // Create a variable to reference the database
 var database = firebase.database();
 
+let currentData = []
+
+function adjustNextArrAndMinAway(params) {
+$(`tr.item`).each(function() {
+    // console.log("MinAway: ", $(this).find(`td.minAway`).html());
+    let nextArr = moment($(this).find(`td.nextArr`).html())
+
+    console.log("NEXT: ", moment(nextArr))
+
+    if (moment(nextArr).isAfter(moment())) {
+        
+        let minAway = $(this).find(`td.minAway`).html()
+        minAway--;
+        $(this).find(`td.minAway`).text(minAway)
+    }
+
+
+})
+}
+
 function prepFillTable() {
-    $("#train-table > tbody").empty();
-    database.ref().on("child_added", function(childSnapshot) {
-        fillTable(childSnapshot);
-      });
+  $("#train-table > tbody").empty();
+  database.ref().on("child_added", function(childSnapshot) {
+    fillTable(childSnapshot);
+  });
 }
 
 // Function gets data from database and fills rows
 function fillTable(childSnapshot) {
-//   console.log("FILLING TABLE");
-//   console.log(childSnapshot.val());
+  //   console.log("FILLING TABLE");
+    // console.log(childSnapshot)
 
   // store everything into a variables
   let name = childSnapshot.val().name;
@@ -51,12 +71,12 @@ function fillTable(childSnapshot) {
     .format("hh:mm A");
 
   // Create the new row
-  var newRow = $("<tr>").append(
-    $("<td>").text(name),
+  var newRow = $("<tr class='item'>").append(
+    $("<td class='name'>").text(name),
     $("<td>").text(destination),
-    $("<td>").text(frequency),
-    $("<td>").text(nextArr),
-    $("<td>").text(minAway)
+    $("<td class='frequency'>").text(frequency),
+    $("<td class='nextArr'>").text(nextArr),
+    $("<td class='minAway'>").text(minAway)
   );
 
   // Apprend the new row to the table
@@ -105,7 +125,9 @@ $("#add-train").on("click", function(event) {
 
 // Firebase event for adding train to the database and a row in the html when the user adds an entry
 database.ref().on("child_added", function(childSnapshot) {
+  currentData.push(childSnapshot);
   fillTable(childSnapshot);
 });
 
-setInterval(prepFillTable, 60000);
+// setInterval(prepFillTable, 60000);
+setInterval(adjustNextArrAndMinAway, 5000);
