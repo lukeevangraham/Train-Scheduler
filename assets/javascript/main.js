@@ -19,13 +19,17 @@ $(`tr.item`).each(function() {
     // console.log("MinAway: ", $(this).find(`td.minAway`).html());
     let nextArr = moment($(this).find(`td.nextArr`).html(), ["h:mm A"])
 
-    console.log("NEXT: ", moment(nextArr).format("HH:mm"))
-
     if (moment(nextArr).isAfter(moment())) {
-        
         let minAway = $(this).find(`td.minAway`).html()
         minAway--;
         $(this).find(`td.minAway`).text(minAway)
+    } else if (moment(nextArr).isSame(moment(), 'minute')) {
+      // add frequency to nextArr
+      nextArr = moment(nextArr).add($(this).find(`td.frequency`).html(), 'm')
+      $(this).find(`td.nextArr`).text(moment(nextArr).format('h:mm A'));
+
+      // reset minAway to frequency
+      $(this).find(`td.minAway`).text($(this).find(`td.frequency`).html());
     }
 
 
@@ -128,4 +132,4 @@ database.ref().on("child_added", function(childSnapshot) {
 });
 
 // setInterval(prepFillTable, 60000);
-setInterval(adjustNextArrAndMinAway, 5000);
+setInterval(adjustNextArrAndMinAway, 60000);
