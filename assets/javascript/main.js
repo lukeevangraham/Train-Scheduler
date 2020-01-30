@@ -12,14 +12,26 @@ firebase.initializeApp(config);
 // Create a variable to reference the database
 var database = firebase.database();
 
+let editClicked = false;
+
 // let currentData = []
 
 function delChild(key) {
   database.ref(key).remove();
 }
 
-function editChild(key) {
-  console.log("UPDATING KEY: ", key)
+function editChild(name) {
+editClicked = true;
+
+  let nameArray = name.split(", ")
+
+  // $('#name-input').focus()
+  $("#name-input").val(nameArray[0]);
+  $("#destination-input").val(nameArray[1]);
+  $("#initial-time-input").val(nameArray[2]);
+  $("#frequency-input").val(nameArray[3]);
+
+  $(`#add-train`).attr("key", nameArray[4])
 }
 
 function adjustNextArrAndMinAway(params) {
@@ -52,7 +64,9 @@ function prepFillTable() {
 }
 
 // Function gets data from database and fills rows
-function fillTable(childSnapshot) {
+function fillTable(childSnapshot, string) {
+
+  // string denotes a second argument prompting a ".replace" instead of a ".append"
 
   // store everything into a variables
   let name = childSnapshot.val().name;
@@ -87,15 +101,19 @@ function fillTable(childSnapshot) {
     $("<td class='frequency'>").text(frequency),
     $("<td class='nextArr'>").text(nextArr),
     $("<td class='minAway'>").text(minAway),
-    $("<td>").html(`<a href="#" class="text-danger" onclick="delChild('` + childSnapshot.ref.key + `')"><i class="fas fa-trash-alt p-1"></i></a><a href="#" class="text-secondary" onclick="editChild('` + childSnapshot.ref.key  + `')"><i class="fas fa-edit p-1"></i></a>`)
+    $("<td>").html(`<a href="#" class="text-danger" onclick="delChild('` + childSnapshot.ref.key + `')"><i class="fas fa-trash-alt p-1"></i></a><a href="#" class="text-secondary" onclick="editChild('` + name  + `, ` + destination + `, ` + frequency + `, ` + initialTime + ` , ` + childSnapshot.ref.key +`')"><i class="fas fa-edit p-1"></i></a>`)
   );
 
-  // Apprend the new row to the table
-  $("#train-table > tbody").append(newRow);
+  if (string === "replace") {
+    // $("#train-table > tbody").append(newRow);  
+    $(`#` + childSnapshot.ref.key).replaceWith(newRow);
+  } else {
+    // Apprend the new row to the table
+    $("#train-table > tbody").append(newRow);
+  }
 }
 
 function removeTableItem(childSnapshot) {
-  console.log("CHILD: ", childSnapshot.val())
 $(`#`+ childSnapshot.ref.key).remove()
 }
 
@@ -127,10 +145,16 @@ $("#add-train").on("click", function(event) {
     frequency: frequency
   };
 
-  // Upload train data to the database
-  database.ref().push(newTrain);
 
-  alert("Train successfully added");
+  if (editClicked === false) {
+    // Upload train data to the database
+    database.ref().push(newTrain);
+  
+    alert("Train successfully added");
+    
+  } else if (editClicked === true) {
+    database.ref($("#add-train").attr("key")).set({name: name, destination: destination, initialTime: frequency, frequency: initialTime})
+  }
 
   // Clears all of the text-boxes
   $("#name-input").val("");
@@ -147,6 +171,10 @@ database.ref().on("child_added", function(childSnapshot) {
 
 database.ref().on("child_removed", function(childSnapshot) {
   removeTableItem(childSnapshot);
+})
+
+database.ref().on("child_changed", function(childSnapshot) {
+  fillTable(childSnapshot, "replace")
 })
 
 // setInterval(prepFillTable, 60000);
