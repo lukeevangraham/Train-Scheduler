@@ -13,8 +13,20 @@ firebase.initializeApp(config);
 var database = firebase.database();
 
 let editClicked = false;
+var preventClearBtns = false;
 
 // let currentData = []
+
+function clearForm() {
+  $("#clear-btn").remove();
+  preventClearBtns = false;
+
+  // Clears all of the text-boxes
+  $("#name-input").val("");
+  $("#destination-input").val("");
+  $("#initial-time-input").val("");
+  $("#frequency-input").val("");
+}
 
 function delChild(key) {
   database.ref(key).remove();
@@ -32,6 +44,18 @@ editClicked = true;
   $("#frequency-input").val(nameArray[3]);
 
   $(`#add-train`).attr("key", nameArray[4])
+
+  console.log(preventClearBtns)
+
+  if (!preventClearBtns) {
+    // make a clear button
+    $(`#add-train`).after(`<button class="btn btn-secondary btn-sm ml-2" id="clear-btn" onclick="clearForm()">Clear</button>`)
+    preventClearBtns = true;
+    
+  }
+
+  
+
 }
 
 function adjustNextArrAndMinAway(params) {
@@ -156,11 +180,7 @@ $("#add-train").on("click", function(event) {
     database.ref($("#add-train").attr("key")).set({name: name, destination: destination, initialTime: frequency, frequency: initialTime})
   }
 
-  // Clears all of the text-boxes
-  $("#name-input").val("");
-  $("#destination-input").val("");
-  $("#initial-time-input").val("");
-  $("#frequency-input").val("");
+  clearForm();
 });
 
 // Firebase event for adding train to the database and a row in the html when the user adds an entry
