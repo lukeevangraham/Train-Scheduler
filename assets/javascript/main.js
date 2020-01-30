@@ -12,7 +12,15 @@ firebase.initializeApp(config);
 // Create a variable to reference the database
 var database = firebase.database();
 
-let currentData = []
+// let currentData = []
+
+function delChild(key) {
+  database.ref(key).remove();
+}
+
+function editChild(key) {
+  console.log("UPDATING KEY: ", key)
+}
 
 function adjustNextArrAndMinAway(params) {
 $(`tr.item`).each(function() {
@@ -73,16 +81,22 @@ function fillTable(childSnapshot) {
     .format("hh:mm A");
 
   // Create the new row
-  var newRow = $("<tr class='item'>").append(
+  var newRow = $("<tr class='item' id='" + childSnapshot.ref.key + "'>").append(
     $("<td class='name'>").text(name),
     $("<td>").text(destination),
     $("<td class='frequency'>").text(frequency),
     $("<td class='nextArr'>").text(nextArr),
-    $("<td class='minAway'>").text(minAway)
+    $("<td class='minAway'>").text(minAway),
+    $("<td>").html(`<a href="#" class="text-danger" onclick="delChild('` + childSnapshot.ref.key + `')"><i class="fas fa-trash-alt p-1"></i></a><a href="#" class="text-secondary" onclick="editChild('` + childSnapshot.ref.key  + `')"><i class="fas fa-edit p-1"></i></a>`)
   );
 
   // Apprend the new row to the table
   $("#train-table > tbody").append(newRow);
+}
+
+function removeTableItem(childSnapshot) {
+  console.log("CHILD: ", childSnapshot.val())
+$(`#`+ childSnapshot.ref.key).remove()
 }
 
 // Capture Button Click
@@ -127,9 +141,13 @@ $("#add-train").on("click", function(event) {
 
 // Firebase event for adding train to the database and a row in the html when the user adds an entry
 database.ref().on("child_added", function(childSnapshot) {
-  currentData.push(childSnapshot);
+  // currentData.push(childSnapshot);
   fillTable(childSnapshot);
 });
+
+database.ref().on("child_removed", function(childSnapshot) {
+  removeTableItem(childSnapshot);
+})
 
 // setInterval(prepFillTable, 60000);
 setInterval(adjustNextArrAndMinAway, 60000);

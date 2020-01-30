@@ -1,117 +1,175 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Train Scheduler</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" media="screen" href="./assets/css/style.css">
-    <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="./assets/css/style.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Quicksand"
+      rel="stylesheet"
+    />
+
     <!-- Moment.js Reference -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script
+      src="https://kit.fontawesome.com/7af90b3384.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
 
-
-</head>
-<body>
-    
-    <div class="col-lg-10 mx-auto">
-        <div class="jumbotron jumbotron-fluid rounded" id="jumbotron">
-            <div class="container">
-            <h1 class="display-4 text-center">Anytime is Train Time</h1>
-            <p class="lead text-center">Chugga Chugga. Choo Choo.</p>
-            </div>
+    <div class="container">
+    <div class="col-lg-12 p-0">
+      <div class="jumbotron jumbotron-fluid rounded" id="jumbotron">
+        <div class="container">
+          <h1 class="display-4 text-center">Anytime is Train Time</h1>
+          <p class="lead text-center">Chugga Chugga. Choo Choo.</p>
         </div>
+      </div>
     </div>
 
-
-        <div class="col-lg-10 mx-auto pb-4">
-            <div class="card" id="table">
-                    <div class="card-header">
-                    Current Train Schedule
-                    </div>
-                    <div class="card-body">
-                        <table class="table" id="train-table">
-                                <thead>
-                                <tr>
-                                    <th scope="col">Train Name</th>
-                                    <th scope="col">Destination</th>
-                                    <th scope="col">Frequency (min)</th>
-                                    <th scope="col">Next Arrival</th>
-                                    <th scope="col">Minutes Away</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr id="main-table">
-                                    <!-- <th scope="row">1</th> -->
-                                    <!-- <td>Mark</td> -->
-                                    <!-- <td>Otto</td> -->
-                                    <!-- <td>@mdo</td> -->
-                                <!-- </tr> -->
-                                <!-- <tr> -->
-                                    <!-- <th scope="row">2</th> -->
-                                    <!-- <td>Jacob</td> -->
-                                    <!-- <td>Thornton</td> -->
-                                    <!-- <td>@fat</td> -->
-                                <!-- </tr> -->
-                                <!-- <tr> -->
-                                    <!-- <th scope="row">3</th> -->
-                                    <!-- <td>Larry</td> -->
-                                    <!-- <td>the Bird</td> -->
-                                    <!-- <td>@twitter</td> -->
-                                <!-- </tr> -->
-                                </tbody>
-                            </table>
-                    </div>
-                </div>
+    <div class="row">
+      <div class="col-lg-9 pb-4">
+        <div class="card" id="table">
+          <div class="card-header">
+            Current Train Schedule
+          </div>
+          <div class="card-body">
+            <table class="table" id="train-table">
+              <thead>
+                <tr>
+                  <th scope="col">Train Name</th>
+                  <th scope="col">Destination</th>
+                  <th scope="col">Frequency (min)</th>
+                  <th scope="col">Next Arrival</th>
+                  <th scope="col">Min. Away</th>
+                  <!-- <th scope="col">More</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <tr id="main-table">
+                  <!-- <th scope="row">1</th> -->
+                  <!-- <td>Mark</td> -->
+                  <!-- <td>Otto</td> -->
+                  <!-- <td>@mdo</td> -->
+                  <!-- </tr> -->
+                  <!-- <tr> -->
+                  <!-- <th scope="row">2</th> -->
+                  <!-- <td>Jacob</td> -->
+                  <!-- <td>Thornton</td> -->
+                  <!-- <td>@fat</td> -->
+                  <!-- </tr> -->
+                  <!-- <tr> -->
+                  <!-- <th scope="row">3</th> -->
+                  <!-- <td>Larry</td> -->
+                  <!-- <td>the Bird</td> -->
+                  <!-- <td>@twitter</td> -->
+                  <!-- </tr> -->
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
+      </div>
 
-        <div class="col-lg-10 mx-auto pb-4">
-                <div class="card" id="form">
-                    <div class="card-header">
-                        Add Train
-                    </div>
-                    <div class="card-body">
-                        <form>
-                            <div class="form-group">
-                                <label for="exampleFormControlInput1">Train Name</label>
-                                <input type="email" class="form-control" id="name-input" placeholder="Orient Express">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleFormControlInput1">Destination</label>
-                                <input type="email" class="form-control" id="destination-input" placeholder="Zagreb">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleFormControlInput1">First Train Time (HH:mm - military time)</label>
-                                <input type="email" class="form-control" id="initial-time-input" placeholder="00:00">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleFormControlInput1">Frequency (min)</label>
-                                <input type="email" class="form-control" id="frequency-input" placeholder="60">
-                            </div>
-                            <button type="submit" id="add-train" class="btn btn-primary">Submit</button>
-                            </form>
+      <div class="col-lg-3 pb-4">
+        <div class="card" id="form">
+          <div class="card-header">
+            Add Train
+          </div>
+          <div class="card-body">
+            <form>
+              <div class="form-group">
+                <label for="exampleFormControlInput1">Train Name</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="name-input"
+                  placeholder="Orient Express"
+                />
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlInput1">Destination</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="destination-input"
+                  placeholder="Zagreb"
+                />
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlInput1"
+                  >First Train Time (HH:mm - military time)</label
+                >
+                <input
+                  type="email"
+                  class="form-control"
+                  id="initial-time-input"
+                  placeholder="00:00"
+                />
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlInput1">Frequency (min)</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="frequency-input"
+                  placeholder="60"
+                />
+              </div>
+              <button type="submit" id="add-train" class="btn btn-primary">
+                Submit
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
 
-
-                        
-                    </div>
-                      </div>
-          
-            </div>
-
-
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
 
     <!-- FIREBASE CDN -->
     <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase.js"></script>
 
     <!-- MAIN SCRIPT -->
     <script src="./assets/javascript/main.js"></script>
-</body>
+  </body>
 </html>
