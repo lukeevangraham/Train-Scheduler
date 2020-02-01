@@ -90,8 +90,6 @@ function fillTable(childSnapshot, string) {
 
   // string denotes a second argument prompting a ".replace" instead of a ".append"
 
-  console.log(childSnapshot.val())
-
   // store everything into a variables
   let name = childSnapshot.val().name;
   let destination = childSnapshot.val().destination;
