@@ -40,12 +40,10 @@ editClicked = true;
   // $('#name-input').focus()
   $("#name-input").val(nameArray[0]);
   $("#destination-input").val(nameArray[1]);
-  $("#initial-time-input").val(nameArray[2]);
-  $("#frequency-input").val(nameArray[3]);
+  $("#frequency-input").val(nameArray[2]);
+  $("#initial-time-input").val(nameArray[3]);
 
   $(`#add-train`).attr("key", nameArray[4])
-
-  console.log(preventClearBtns)
 
   if (!preventClearBtns) {
     // make a clear button
@@ -91,6 +89,8 @@ function prepFillTable() {
 function fillTable(childSnapshot, string) {
 
   // string denotes a second argument prompting a ".replace" instead of a ".append"
+
+  console.log(childSnapshot.val())
 
   // store everything into a variables
   let name = childSnapshot.val().name;
@@ -177,7 +177,7 @@ $("#add-train").on("click", function(event) {
     alert("Train successfully added");
     
   } else if (editClicked === true) {
-    database.ref($("#add-train").attr("key")).set({name: name, destination: destination, initialTime: frequency, frequency: initialTime})
+    database.ref($("#add-train").attr("key")).set({name: name, destination: destination, initialTime: initialTime, frequency: frequency})
   }
 
   clearForm();
