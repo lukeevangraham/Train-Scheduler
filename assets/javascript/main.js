@@ -9,6 +9,8 @@ var config = {
 };
 firebase.initializeApp(config);
 
+$(`#table`).hide()
+
 // var provider = new firebase.auth.GoogleAuthProvider();
 
 // Create a variable to reference the database
@@ -29,6 +31,7 @@ var uiConfig = {
       // or whether we leave that to developer to handle.
 
       loggedIn = true;
+      $(`#table`).show()
       console.log("LOGGED IN!", authResult)
       return false;
     },
@@ -224,9 +227,8 @@ $("#add-train").on("click", function(event) {
 
 // Firebase event for adding train to the database and a row in the html when the user adds an entry
 database.ref().on("child_added", function(childSnapshot) {
-  loggedIn ? fillTable(childSnapshot) : ''
   // currentData.push(childSnapshot);
-  ;
+  fillTable(childSnapshot);
 });
 
 database.ref().on("child_removed", function(childSnapshot) {
