@@ -42,7 +42,7 @@ var uiConfig = {
 
       sayHi(authResult)
       console.log("LOGGED IN!", authResult)
-      return true;
+      return false;
     },
     uiShown: function() {
       // The widget is rendered.
