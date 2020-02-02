@@ -16,22 +16,10 @@ var database = firebase.database();
 
 let editClicked = false;
 var preventClearBtns = false;
+let loggedIn = false;
 
 // Initialize the FirebaseUI Widget using Firebase.
 var ui = new firebaseui.auth.AuthUI(firebase.auth());
-
-// ui.start('#firebaseui-auth-container', {
-//   signInOptions: [
-//     // List of OAuth providers supported.
-//     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-//     firebase.auth.GithubAuthProvider.PROVIDER_ID
-//   ],
-//   // Other config options...
-// });
-
-function sayHi(auth) {
-  console.log("HI", auth)
-}
 
 var uiConfig = {
   callbacks: {
@@ -40,7 +28,7 @@ var uiConfig = {
       // Return type determines whether we continue the redirect automatically
       // or whether we leave that to developer to handle.
 
-      sayHi(authResult)
+      loggedIn = true;
       console.log("LOGGED IN!", authResult)
       return false;
     },
@@ -68,24 +56,6 @@ var uiConfig = {
 ui.start('#firebaseui-auth-container', uiConfig);
 
 // let currentData = []
-
-
-// firebase.auth().signInWithPopup(provider).then(function(result) {
-//   // This gives you a Google Access Token. You can use it to access the Google API.
-//   var token = result.credential.accessToken;
-//   // The signed-in user info.
-//   var user = result.user;
-//   // ...
-// }).catch(function(error) {
-//   // Handle Errors here.
-//   var errorCode = error.code;
-//   var errorMessage = error.message;
-//   // The email of the user's account used.
-//   var email = error.email;
-//   // The firebase.auth.AuthCredential type that was used.
-//   var credential = error.credential;
-//   // ...
-// });
 
 
 function clearForm() {
@@ -254,8 +224,9 @@ $("#add-train").on("click", function(event) {
 
 // Firebase event for adding train to the database and a row in the html when the user adds an entry
 database.ref().on("child_added", function(childSnapshot) {
+  loggedIn ? fillTable(childSnapshot) : ''
   // currentData.push(childSnapshot);
-  fillTable(childSnapshot);
+  ;
 });
 
 database.ref().on("child_removed", function(childSnapshot) {
