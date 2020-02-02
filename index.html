@@ -29,55 +29,9 @@
       crossorigin="anonymous"
     ></script>
 
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-app.js"></script>
+    
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
 
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-
-<script>
-  // Your web app's Firebase configuration
-  var firebaseConfig = {
-    apiKey: "AIzaSyDXoWWWGL5Fd_1U0AJnbXeR2Ur0VoM54RY",
-    authDomain: "train-scheduler-fb382.firebaseapp.com",
-    databaseURL: "https://train-scheduler-fb382.firebaseio.com",
-    projectId: "train-scheduler-fb382",
-    storageBucket: "train-scheduler-fb382.appspot.com",
-    messagingSenderId: "181508120277",
-    appId: "1:181508120277:web:a03bbe9efc48f2846d8c5c"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-</script>
-
-
-    <script src="https://www.gstatic.com/firebasejs/ui/4.4.0/firebase-ui-auth.js"></script>
-<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.4.0/firebase-ui-auth.css" />
-
-<script type="text/javascript">
-  // FirebaseUI config.
-  var uiConfig = {
-    signInSuccessUrl: '<url-to-redirect-to-on-success>',
-    signInOptions: [
-      // Leave the lines as is for the providers you want to offer your users.
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      firebase.auth.GithubAuthProvider.PROVIDER_ID,
-    ],
-    // tosUrl and privacyPolicyUrl accept either url string or a callback
-    // function.
-    // Terms of service url/callback.
-    tosUrl: '<your-tos-url>',
-    // Privacy policy url/callback.
-    privacyPolicyUrl: function() {
-      window.location.assign('<your-privacy-policy-url>');
-    }
-  };
-
-  // Initialize the FirebaseUI Widget using Firebase.
-  var ui = new firebaseui.auth.AuthUI(firebase.auth());
-  // The start method will wait until the DOM is loaded.
-  ui.start('#firebaseui-auth-container', uiConfig);
-</script>
 
   </head>
   <body>
@@ -90,6 +44,9 @@
           <p class="lead text-center">Chugga Chugga. Choo Choo.</p>
         </div>
       </div>
+
+      <div id="firebaseui-auth-container"></div>
+<div id="loader">Loading...</div>
     </div>
 
     <div class="row">
@@ -188,8 +145,6 @@
           </div>
         </div>
       </div>
-      <div><button id="auth">Auth</button></div>
-      <div id="firebaseui-auth-container"></div>
     </div>
 </div>
 
@@ -221,6 +176,8 @@
 
     <!-- FIREBASE CDN -->
     <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-auth.js"></script> -->
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
 
     <!-- MAIN SCRIPT -->
     <script src="./assets/javascript/main.js"></script>
