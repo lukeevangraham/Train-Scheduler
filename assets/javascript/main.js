@@ -29,13 +29,19 @@ var ui = new firebaseui.auth.AuthUI(firebase.auth());
 //   // Other config options...
 // });
 
+function sayHi(auth) {
+  console.log("HI", auth)
+}
+
 var uiConfig = {
   callbacks: {
     signInSuccessWithAuthResult: function(authResult, redirectUrl) {
       // User successfully signed in.
       // Return type determines whether we continue the redirect automatically
       // or whether we leave that to developer to handle.
-      console.log("LOGGED IN!")
+
+      sayHi(authResult)
+      console.log("LOGGED IN!", authResult)
       return true;
     },
     uiShown: function() {
