@@ -10,6 +10,7 @@ var config = {
 firebase.initializeApp(config);
 
 $(`#table`).hide()
+$(`#form`).hide()
 
 // var provider = new firebase.auth.GoogleAuthProvider();
 
@@ -32,6 +33,7 @@ var uiConfig = {
 
       loggedIn = true;
       $(`#table`).show()
+      $(`#form`).show()
       console.log("LOGGED IN!", authResult)
       return false;
     },
